@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Canvas, useLoader } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -74,13 +74,6 @@ function RotatingGlobe({ onCountrySelect }) {
   // Create sphere geometry with rotation
   const sphereGeometry = new THREE.SphereGeometry(1, 64, 64);
   sphereGeometry.rotateY(Math.PI); // Rotate -90 degrees around Y-axis
-
-  // Slow rotation
-  useFrame(() => {
-    if (globeRef.current) {
-      globeRef.current.rotation.y += 0.001;
-    }
-  });
 
   return (
     <group ref={globeRef}>
