@@ -1,4 +1,5 @@
-# GaiaScope
+# <img src="https://i.pinimg.com/originals/2c/f3/0f/2cf30ffdbfa3db621d303e9575ff9e47.gif" width=45 height=45>  GaiaScope 
+
 
 GaiaScope is an interactive globe visualization app for exploring UN Sustainable Development Goals (SDGs), pollution, and climate risk data by country. It features a 3D globe, SDG charts, Gemini-powered Q&A, and dynamic overlays.
 
@@ -27,15 +28,14 @@ GaiaScope is an interactive globe visualization app for exploring UN Sustainable
    npm run dev
    ```
 3. **Open in browser:**
-   Visit [http://localhost:5173](http://localhost:5173)
+   Visit [https://gaia-scope.vercel.app/](https://gaia-scope.vercel.app/)
 
 ## Project Structure
 - `src/components/` – React UI components
 - `public/data/` – Mock JSON data for SDGs, pollution, metadata
 
 ## Deployment
-Deploy easily to Vercel or Netlify. Push to GitHub and connect your repo.
-
+[https://gaia-scope.vercel.app/](https://gaia-scope.vercel.app/)
 ---
 
 © 2025 GaiaScope
