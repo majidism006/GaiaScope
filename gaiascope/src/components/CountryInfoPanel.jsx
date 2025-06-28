@@ -9,9 +9,6 @@ const CountryInfoPanel = ({ country, sdgData, onModeChange, mode }) => {
       
       {country && (
         <div className="mb-4">
-          <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-            Country Code: {country.code}
-          </p>
           <p className="text-sm text-gray-600 dark:text-gray-300">
             Click on the globe to select a different country
           </p>
