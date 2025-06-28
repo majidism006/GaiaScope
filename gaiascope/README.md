@@ -1,4 +1,4 @@
-# GaiaScope
+# GaiaScope!
 
 GaiaScope is an interactive globe visualization app for exploring UN Sustainable Development Goals (SDGs), pollution, and climate risk data by country. It features a 3D globe, SDG charts, Gemini-powered Q&A, and dynamic overlays.
 
