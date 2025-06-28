@@ -3,6 +3,7 @@ import GlobeView from './components/GlobeView';
 import CountryInfoPanel from './components/CountryInfoPanel';
 import SDGChart from './components/SDGChart';
 import GeminiChatBox from './components/GeminiChatBox';
+import LandingPage from './components/LandingPage';
 import './App.css';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
   const [mode, setMode] = useState('base');
   const [messages, setMessages] = useState([]);
   const [mockData, setMockData] = useState(null);
+  const [showMainApp, setShowMainApp] = useState(false);
 
   // Load mock data on component mount
   useEffect(() => {
@@ -64,6 +66,14 @@ function App() {
       setMessages(prev => [...prev, { role: 'assistant', text: randomResponse }]);
     }, 1000);
   };
+
+  const handleStartApp = () => {
+    setShowMainApp(true);
+  };
+
+  if (!showMainApp) {
+    return <LandingPage onStart={handleStartApp} />;
+  }
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-100 dark:bg-gray-900">
