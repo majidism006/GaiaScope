@@ -1,0 +1,31 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "ADMIN": "United States",
+        "ISO_A2": "US"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-125, 50], [-125, 25], [-65, 25], [-65, 50], [-125, 50]
+        ]]
+      }
+    },
+    {
+      "type": "Feature", 
+      "properties": {
+        "ADMIN": "Canada",
+        "ISO_A2": "CA"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-125, 50], [-125, 60], [-65, 60], [-65, 50], [-125, 50]
+        ]]
+      }
+    }
+  ]
+} 
