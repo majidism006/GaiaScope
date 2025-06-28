@@ -33,7 +33,7 @@ function CountryBorders({ geojson, onCountrySelect }) {
       const positions = poly[0].flatMap(([lng, lat]) => {
         // Convert [lng, lat] to 3D sphere coords
         const phi = (90 - lat) * (Math.PI / 180);
-        const theta = (lng + 180) * (Math.PI / 180);
+        const theta = (-lng - 90) * (Math.PI / 180);
         const r = 1.01; // slightly above sphere
         return [
           r * Math.sin(phi) * Math.cos(theta),
@@ -68,16 +68,16 @@ function CountryBorders({ geojson, onCountrySelect }) {
 function RotatingGlobe({ onCountrySelect }) {
   const globeRef = useRef();
   // Load Earth texture
-  const earthMap = useLoader(THREE.TextureLoader, '/image.jpg');
+  const earthMap = useLoader(THREE.TextureLoader, '/earth.jpg');
   const geojson = useGeoJson('/countries.geojson');
 
-  // Create sphere geometry with rotation
+  // Create sphere geometry WITH 180-degree rotation
   const sphereGeometry = new THREE.SphereGeometry(1, 64, 64);
-  sphereGeometry.rotateY(Math.PI); // Rotate -90 degrees around Y-axis
+  sphereGeometry.rotateY(Math.PI/2); // Rotate -180 degrees around Y-axis
 
   return (
     <group ref={globeRef}>
-      {/* Earth sphere with rotated geometry to align texture with borders */}
+      {/* Earth sphere with geometry to align texture with borders */}
       <mesh geometry={sphereGeometry}>
         <meshStandardMaterial map={earthMap} />
       </mesh>
