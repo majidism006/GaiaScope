@@ -65,10 +65,25 @@ function CountryBorders({ geojson, onCountrySelect }) {
   });
 }
 
-function RotatingGlobe({ onCountrySelect }) {
+function RotatingGlobe({ onCountrySelect, mode }) {
   const globeRef = useRef();
-  // Load Earth texture
-  const earthMap = useLoader(THREE.TextureLoader, '/earth.jpg');
+  // Get texture based on mode
+  const getTexturePath = (mode) => {
+    switch (mode) {
+      case 'pollution':
+        return '/pollution.jpg';
+      case 'climate':
+        return '/climate.jpg';
+      case 'sdg':
+        return '/sdj.jpg';
+      default:
+        return '/earth.jpg'; // Base mode
+    }
+  };
+  
+  // Load Earth texture based on mode
+  const earthMap = useLoader(THREE.TextureLoader, getTexturePath(mode));
+  
   const geojson = useGeoJson('/countries.geojson');
 
   // Create sphere geometry WITH 180-degree rotation
@@ -88,13 +103,13 @@ function RotatingGlobe({ onCountrySelect }) {
   );
 }
 
-const GlobeView = ({ onCountrySelect }) => {
+const GlobeView = ({ onCountrySelect, mode }) => {
   return (
     <div className="w-full h-full bg-gray-900 flex items-center justify-center">
       <Canvas camera={{ position: [0, 0, 3] }} style={{ width: '100%', height: '100%' }}>
         <ambientLight intensity={0.7} />
         <directionalLight position={[5, 3, 5]} intensity={0.7} />
-        <RotatingGlobe onCountrySelect={onCountrySelect} />
+        <RotatingGlobe onCountrySelect={onCountrySelect} mode={mode} />
         <Stars radius={10} depth={50} count={500} factor={0.5} fade />
         <OrbitControls enablePan={false} enableZoom={true} enableRotate={true} />
       </Canvas>
