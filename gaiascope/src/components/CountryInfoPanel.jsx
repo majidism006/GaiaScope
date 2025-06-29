@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CountryInfoPanel = ({ country, sdgData, onModeChange, mode }) => {
+const CountryInfoPanel = ({ country, onModeChange, mode }) => {
   return (
     <div className="p-4 bg-white dark:bg-gray-800 rounded shadow w-full">
       <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">
@@ -31,16 +31,7 @@ const CountryInfoPanel = ({ country, sdgData, onModeChange, mode }) => {
       
       {!country && (
         <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-          <p>Type a country name on the search bar to view its information</p>
-        </div>
-      )}
-      
-      {country && sdgData && (
-        <div className="mt-4">
-          <h3 className="font-semibold mb-2 text-gray-800 dark:text-white">SDG Data</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-300">
-            SDG data will be displayed here when available
-          </p>
+          <p>Click on a country on the globe to view its information</p>
         </div>
       )}
     </div>
