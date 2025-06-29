@@ -161,11 +161,25 @@ function animateCameraTo(camera, target, duration = 2000) {
   requestAnimationFrame(animate);
 }
 
-function RotatingGlobe({ onCountrySelect, searchedCountry }) {
+function RotatingGlobe({ onCountrySelect, mode, searchedCountry }) {
   const globeRef = useRef();
   const { camera } = useThree();
+
+  const getTexturePath = (mode) => {
+    switch (mode) {
+      case 'pollution':
+        return '/pollution.jpg';
+      case 'climate':
+        return '/climate.jpg';
+      case 'sdg':
+        return '/sdj.jpg';
+      default:
+        return '/earth.jpg';
+    }
+  };
+
   // Load Earth texture
-  const earthMap = useLoader(THREE.TextureLoader, '/earth.jpg');
+  const earthMap = useLoader(THREE.TextureLoader, getTexturePath(mode));
   const geojson = useGeoJson('/countries.geojson');
 
   // Create sphere geometry WITH 90-degree rotation
@@ -200,13 +214,13 @@ function RotatingGlobe({ onCountrySelect, searchedCountry }) {
   );
 }
 
-const GlobeView = ({ onCountrySelect, searchedCountry }) => {
+const GlobeView = ({ onCountrySelect, mode, searchedCountry }) => {
   return (
     <div className="w-full h-full bg-gray-900 flex items-center justify-center">
       <Canvas camera={{ position: [0, 0, 3] }} style={{ width: '100%', height: '100%' }}>
         <ambientLight intensity={0.7} />
         <directionalLight position={[5, 3, 5]} intensity={0.7} />
-        <RotatingGlobe onCountrySelect={onCountrySelect} searchedCountry={searchedCountry} />
+        <RotatingGlobe onCountrySelect={onCountrySelect} mode={mode} searchedCountry={searchedCountry} />
         <Stars radius={10} depth={50} count={500} factor={0.5} fade />
         <OrbitControls enablePan={false} enableZoom={true} enableRotate={true} />
       </Canvas>
