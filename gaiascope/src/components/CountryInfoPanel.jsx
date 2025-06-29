@@ -34,7 +34,7 @@ const CountryInfoPanel = ({ country, sdgData, onModeChange, mode }) => {
       
       {!country && (
         <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-          <p>Click on a country on the globe to view its information</p>
+          <p>Type a country name on the search bar to view its information</p>
         </div>
       )}
       
