@@ -4,6 +4,7 @@ import CountryInfoPanel from './components/CountryInfoPanel';
 import SDGChart from './components/SDGChart';
 import GeminiChatBox from './components/GeminiChatBox';
 import LandingPage from './components/LandingPage';
+import { sendMessageToGemini } from './services/geminiService';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
   const [searchedCountry, setSearchedCountry] = useState('');
   const [countryQuery, setCountryQuery] = useState('');
   const [countryInfo, setCountryInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Load mock data on component mount
   useEffect(() => {
@@ -93,20 +95,33 @@ function App() {
 
   const handleModeChange = (newMode) => setMode(newMode);
 
-  const handleSend = (text) => {
-    setMessages([...messages, { role: 'user', text }]);
+  const handleSend = async (text) => {
+    // Add user message immediately
+    const userMessage = { role: 'user', text };
+    setMessages(prev => [...prev, userMessage]);
+    setIsLoading(true);
     
-    // Simulate Gemini response
-    setTimeout(() => {
-      const responses = [
-        "I can help you with information about SDGs and sustainability data.",
-        "That's an interesting question about sustainable development goals.",
-        "Let me provide you with some insights about this topic.",
-        "Based on the available data, I can share some relevant information."
-      ];
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      setMessages(prev => [...prev, { role: 'assistant', text: randomResponse }]);
-    }, 1000);
+    try {
+      // Get response from Gemini API
+      const response = await sendMessageToGemini(text, messages);
+      
+      // Add assistant response
+      const assistantMessage = { 
+        role: 'assistant', 
+        text: response.text 
+      };
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('Error in handleSend:', error);
+      // Add error message
+      const errorMessage = { 
+        role: 'assistant', 
+        text: "I'm sorry, I encountered an error while processing your request. Please try again." 
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleStartApp = () => {
@@ -141,7 +156,7 @@ function App() {
         <div className="md:w-1/3 w-full flex flex-col gap-4 p-4 h-1/2 md:h-full overflow-y-auto">
           <CountryInfoPanel country={countryInfo} sdgData={sdgData} onModeChange={handleModeChange} mode={mode} />
           <SDGChart sdgScores={sdgData?.scores} />
-          <GeminiChatBox onSend={handleSend} messages={messages} />
+          <GeminiChatBox onSend={handleSend} messages={messages} isLoading={isLoading} />
         </div>
       </div>
     </div>

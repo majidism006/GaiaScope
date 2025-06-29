@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
-const GeminiChatBox = ({ onSend, messages }) => {
+const GeminiChatBox = ({ onSend, messages, isLoading = false }) => {
   const [input, setInput] = useState('');
 
   const handleSend = () => {
-    if (input.trim()) {
+    if (input.trim() && !isLoading) {
       onSend(input);
       setInput('');
     }
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !isLoading) {
       handleSend();
     }
   };
@@ -38,21 +38,37 @@ const GeminiChatBox = ({ onSend, messages }) => {
             </div>
           ))
         )}
+        {isLoading && (
+          <div className="flex justify-start">
+            <div className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-3 py-2 rounded-lg text-sm">
+              <div className="flex items-center space-x-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
+                <span>Thinking...</span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       
       <div className="flex gap-2">
         <input
-          className="flex-1 border rounded px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
+          className="flex-1 border rounded px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
-          placeholder="Ask Gemini..."
+          placeholder={isLoading ? "Please wait..." : "Ask Gemini..."}
+          disabled={isLoading}
         />
         <button 
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm transition-colors" 
+          className={`px-4 py-2 rounded text-sm transition-colors ${
+            isLoading 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : 'bg-blue-500 hover:bg-blue-600 text-white'
+          }`}
           onClick={handleSend}
+          disabled={isLoading}
         >
-          Send
+          {isLoading ? 'Sending...' : 'Send'}
         </button>
       </div>
     </div>
